@@ -41,6 +41,16 @@ templates/         ← ノートのひな形
 docs/              ← 使い方の説明（← まずここを読む）
 ```
 
+## 必要なもの
+
+- Claude の有料プラン（Pro / Max）と **Claude Code**
+- Claude Code のプラグイン2つ（セットアップの手順5で入れます）
+  - **`bio-research`** — PubMed 検索・論文全文・臨床試験・論文横断検索（`/paper` が使う）
+  - **`anthropic-skills`** — PDF / Word / Excel / PowerPoint の生成（`/deliver` が使う）
+- （任意）Obsidian — ノートを自分の目で読み書きするアプリ
+
+> 論文検索は、プラグインが無い環境でも動くスクリプトを同梱してあります（NCBI の公式 API を使用）。
+
 ## はじめかた
 
 1. **[SETUP.md](SETUP.md)** — インストールから最初の1回まで（15分）

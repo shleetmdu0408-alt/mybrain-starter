@@ -21,13 +21,27 @@ allowed-tools: Read, Write, Edit, Bash, Glob, Grep, WebSearch, WebFetch
 
 ## Step 1: 検索の経路を決める（最初の1回だけ確認する）
 
-**優先順位①：MCP ツール**（`bio-research` プラグインが有効なら使える）
-- `search_articles` — 論文検索
-- `get_article_metadata` — 書誌情報
-- `convert_article_ids` → `get_full_text_article` — PMC にある論文の全文
-- `find_related_articles` — 関連論文
+**優先順位①：`bio-research` プラグインのツール**（入っていれば最優先で使う）
 
-ツール一覧に見当たらなければ、プラグインが未導入。**そのときは②へ進む**（`docs/02_PubMedの使い方.md` に導入手順）。
+| ツール | 用途 |
+|---|---|
+| `search_articles` | PubMed 検索。PubMed 構文（`[MeSH Terms]` `[pt]` `[dp]`）も自然文も通る。`date_from` / `date_to` / `sort` / `max_results` あり |
+| `get_article_metadata` | 書誌情報（著者・雑誌・巻号・抄録・PMID/PMCID/DOI） |
+| `get_full_text_article` | **PMC にある論文の全文**（PMC ID を渡す。約600万本が対象） |
+| `convert_article_ids` | PMID ⇄ PMCID ⇄ DOI の変換（全文があるかの判定に使う） |
+| `find_related_articles` | 関連論文をたぐる |
+| `lookup_article_by_citation` | 引用文字列から論文を特定する |
+| **臨床試験の検索ツール** | ClinicalTrials.gov。進行中・終了した試験を見る |
+| **論文横断検索ツール** | Semantic Scholar / PubMed / Scopus / arXiv を横断（2億本超）。被引用数・雑誌の格付き。プレプリントを含むので、臨床判断に使うときは査読済みに絞る |
+
+**使い分け：** 系統的に調べる・検索式を残す → **PubMed**。「そもそもエビデンスはあるか」を素早く見る → **横断検索**。
+
+> [!warning] 引用の義務
+> PubMed のツールは**出典として PubMed を示し、DOI を併記すること**が利用条件。
+> 横断検索のツールは**本文中に番号付きで引用し、末尾に文献リストを出すこと**、および
+> **ツールが返す案内文をそのまま最後に載せること**が利用条件。省略しない。
+
+ツール一覧に見当たらなければ、プラグインが未導入。**そのときは②へ進み、導入手順（`docs/02_PubMedの使い方.md` の「1. プラグインを入れる」）をオーナーに一度だけ案内する。**
 
 **優先順位②：同梱スクリプト**（設定不要。ネットさえ繋がれば必ず動く）
 
@@ -36,6 +50,7 @@ bash .claude/skills/paper-search/pubmed.sh '<検索式>' 20
 ```
 
 NCBI E-utilities（PubMed の公式 API）を叩き、**PMID / 年 / 雑誌 / タイトル / DOI / PMC番号 / 研究デザイン**を表で返す。
+
 `①` が使える環境でも、**引用の最終確認はこのスクリプトで行う**（理由は Step 4）。
 
 ## Step 2: 検索式を組む（ここが本体）
