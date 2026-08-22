@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+
+# Obsidian の作業状態（人によって違う。共有しない）
+.obsidian/workspace*
+.obsidian/plugins/
+.trash/
+
+# Claude Code のローカル設定・状態（自分の環境固有）
+.claude/settings.local.json
+.claude/state/lint-snapshot/*
+!.claude/state/lint-snapshot/.gitkeep
+
+# 生成した成果物（中身は各自のもの）
+outputs/deliverables/*
+!outputs/deliverables/README.md
+!outputs/deliverables/archive/.gitkeep
+!outputs/deliverables/src/.gitkeep
+
+# 素材（原本は共有しない）
+raw/*
+!raw/README.md
