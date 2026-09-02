@@ -18,3 +18,13 @@
 ---
 
 🔧 ここから下に、実際に起きた失敗を**新しい順**に3行で足していく。
+
+## 2026-09-02
+
+- やらかし：PDF に埋め込まれたフォントを実測せず「Noto Sans CJK JP で描かれている」と報告したが、
+  `/BaseFont` を実際に読むと **`NotoSansCJKsc`（簡体字）** だった。日本語資料が中国語字形で出ていた。
+- 原因：`fc-list` に "Noto Sans CJK JP" が**存在すること**だけを見て、実際に**選ばれたか**を確認しなかった。
+  この環境は `fc-match "sans-serif:lang=ja"` が中国語フォントを返す設定になっていた。
+- 再発防止：PDF のフォントは**成果物のファイルから読む**。
+  `python3 -c "import re;print(set(re.findall(rb'/BaseFont\s*/([^\s/>\]]+)',open('x.pdf','rb').read())))"`
+  または `pdffonts x.pdf`。**インストール済みかどうかは、実際に使われた証拠にならない。**

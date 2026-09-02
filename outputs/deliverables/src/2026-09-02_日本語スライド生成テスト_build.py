@@ -13,7 +13,7 @@ box(s, ML, 2.70, 11.5, 0.80,
     "日本語スライド生成パイプラインの動作確認",
     size=36, bold=True, color=WHITE, spacing=1.22)
 box(s, ML, 3.65, 11.0, 0.40,
-    "mybrain-starter Vault ／ テスト出力 ／ 2026-09-02",
+    "mybrain-starter Vault ／ テスト出力 ／ 2026-09-02（再ビルド）",
     size=15, color=MUTED_D)
 box(s, ML, 4.40, 10.6, 1.00,
     "問い：この環境で、日本語の .pptx と、同じ内容の PDF を、"
@@ -35,8 +35,8 @@ CARDS = [
      "見出し・表・カード・バッジを\n含む3枚を .pptx として出力。"),
     ("変換", "LibreOffice 24.2.7",
      "同じファイルから3ページの\nPDF を生成。"),
-    ("表示", "Noto Sans CJK JP",
-     "日本語が豆腐（□）にも\n文字化けにもならなかった。"),
+    ("表示", "Noto Sans CJK JP（要設定）",
+     "既定では簡体字の SC 面が\n選ばれるため JP を優先させた。"),
 ]
 for i, (label, tool, body) in enumerate(CARDS):
     x = ML + i * 3.98
@@ -50,13 +50,13 @@ rows = [
     ["日本語のスライド生成", "見出し・表・カードが3枚とも崩れずに出た", "◯"],
     ["PDF への変換", ".pptx と同じ3ページ・同じ本文が取り出せた", "◯"],
     ["記号の表示", "◯ ※ → ─ が絵文字に化けずに出た", "◯"],
-    ["フォントの見え方", "指定した Yu Gothic はこの環境に無く代替された", "要検証"],
+    ["フォントの字形", "既定では中国語字形の SC 面が選ばれていた（設定で修正）", "要検証"],
 ]
 cc = {(1, 2): (GREEN, GREEN_T), (2, 2): (GREEN, GREEN_T),
       (3, 2): (GREEN, GREEN_T), (4, 2): (AMBER, AMBER_T)}
 table(s, ML, 4.00, CW, rows, [3.00, 6.60, 2.233], row_h=0.47, cell_colors=cc)
-footnote(s, "※ 判定は、この Linux 環境（LibreOffice 24.2.7 / Noto Sans CJK JP）での結果。"
-            "Yu Gothic を持つ Windows・Mac の PowerPoint 実機での字面は未確認。")
+footnote(s, "※ PDF の /BaseFont を実測した値は NotoSansCJKjp-Regular ／ -Bold。"
+            "fontconfig を設定する前は NotoSansCJKsc（簡体字）が埋め込まれていた。")
 pagenum(s, 2)
 notes(s, "3枚のうち1枚は表、1枚はカード、1枚はダーク地の見出しにして、"
          "レイアウトの種類ごとに崩れが出ないかを見た。"
@@ -77,10 +77,10 @@ CONC = [
      "はみ出しや重なりは出ていない。"),
     ("できていないこと", AMBER_L,
      "指定フォントの Yu Gothic は\n"
-     "この環境に無く、PDF は\n"
-     "Noto Sans CJK JP で描かれている。\n"
-     "PowerPoint 実機での字面と改行位置は\n"
-     "確認できていない。"),
+     "この環境に無い。fontconfig を\n"
+     "設定するまで、PDF には簡体字の\n"
+     "NotoSansCJKsc が埋め込まれていた。\n"
+     "PowerPoint 実機での字面は未確認。"),
     ("次の一手", MUTED_D,
      "本番の資料は、この手順のまま\n"
      "中身だけ差し替えればよい。\n"
